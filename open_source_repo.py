@@ -41,6 +41,23 @@ def search_memo():
     else:
         messagebox.showinfo("검색 결과", "일치하는 메모가 없습니다.")
 
+# 메모를 삭제하는 함수
+def delete_memo():
+    # 선택된 날짜의 메모를 삭제한다.
+    selected_date = cal.selection_get()
+    if selected_date in memos:
+        # 삭제된 메모를 콘솔에 출력한다. 
+        deleted_memo = memos.pop(selected_date)
+        print(f"삭제된 메모 - 날짜: {selected_date}, 내용: {deleted_memo}")
+        
+        # 텍스트 입력 필드를 초기화한다. 
+        memo_entry.delete(1.0, tk.END)
+        messagebox.showinfo("삭제 완료", f"날짜 {selected_date}의 메모가 삭제되었습니다.")
+    else:
+        # 삭제할 메모가 없는 경우 알림을 띄운다. 
+        messagebox.showinfo("삭제 실패", f"날짜 {selected_date}에는 삭제할 메모가 없습니다.")
+
+
 # tkinker를 이용한 gui 프로그램 창을 생성한다.
 root = tk.Tk()
 root.title("한국어 달력")
@@ -71,6 +88,10 @@ memo_entry.pack(pady=5)
 # 메모 저장 버튼을 구현한다. 
 save_button = tk.Button(root, text="메모 저장", command=save_memo)
 save_button.pack(pady=5)
+
+#메모 삭제 버튼을 구현한다.
+delete_button = tk.Button(root, text="메모 삭제", command=delete_memo)
+delete_button.pack(pady=5)
 
 # 검색 필드 및 버튼을 구현한다. 
 search_entry = tk.Entry(root, width=30)
